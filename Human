@@ -1,0 +1,67 @@
+package com.javarush.task.task08.task0824;
+import java.util.ArrayList;
+
+public class Solution {
+    public static void main(String[] args) {
+        Human child1 = new Human("Alex", true, 5);
+        Human child2 = new Human("Mary", false, 7);
+        Human child3 = new Human("John", false, 9);
+        Human father = new Human("Oleg", true, 30, child1, child2, child3);
+        Human mother = new Human("Olga", false, 29, child1, child2, child3);
+        Human grandMotherOfFather = new Human("Anna", false, 70, father);
+        Human grandFatherOfFather = new Human("Nikola", true, 72, father);
+        Human grandMotherOfMother = new Human("Alla", false, 71, mother);
+        Human grandFatherOfMother = new Human("Nikita", true, 73, mother);
+
+        System.out.println(child1.toString());
+        System.out.println(child2.toString());
+        System.out.println(child3.toString());
+        System.out.println(father.toString());
+        System.out.println(mother.toString());
+        System.out.println(grandMotherOfFather.toString());
+        System.out.println(grandFatherOfFather.toString());
+        System.out.println(grandMotherOfMother.toString());
+        System.out.println(grandFatherOfMother.toString());
+    }
+
+    public static class Human {
+        public String name;
+        public boolean sex;
+        public int age;
+        public ArrayList<Human> children = new ArrayList<Human>();
+
+        public Human(String name, boolean sex, int age){
+            this.name = name;
+            this.sex = sex;
+            this.age = age;
+        }
+
+        public Human(String name, boolean sex, int age, Human ... children){
+            this.name = name;
+            this.sex = sex;
+            this.age = age;
+
+            for(Human child : children)
+                this.children.add(child);
+        }
+
+        public String toString() {
+            String text = "";
+            text += "Имя: " + this.name;
+            text += ", пол: " + (this.sex ? "мужской" : "женский");
+            text += ", возраст: " + this.age;
+
+            int childCount = this.children.size();
+            if (childCount > 0) {
+                text += ", дети: " + this.children.get(0).name;
+
+                for (int i = 1; i < childCount; i++) {
+                    Human child = this.children.get(i);
+                    text += ", " + child.name;
+                }
+            }
+            return text;
+        }
+    }
+
+}
